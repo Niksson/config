@@ -1,0 +1,149 @@
+{
+	"name": "vscode-xml-complete",
+	"displayName": "Xml Complete",
+	"publisher": "rogalmic",
+	"description": "XML editing helper (using XSD schemaLocation)",
+	"author": {
+		"name": "Michal Rogalinski",
+		"email": "rogalinsky@gmail.com"
+	},
+	"version": "0.2.11",
+	"preview": true,
+	"license": "MIT",
+	"engines": {
+		"vscode": "^1.40.0",
+		"node": "^12.8.1"
+	},
+	"icon": "images/xml-complete-icon.png",
+	"categories": [
+		"Programming Languages",
+		"Linters"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/rogalmic/vscode-xml-complete.git"
+	},
+	"bugs": {
+		"url": "https://github.com/rogalmic/vscode-xml-complete/issues"
+	},
+	"badges": [
+		{
+			"url": "https://img.shields.io/github/downloads/rogalmic/vscode-xml-complete/latest/total.svg",
+			"href": "https://github.com/rogalmic/vscode-xml-complete/releases/latest",
+			"description": "Download latest beta release (master branch)"
+		},
+		{
+			"url": "https://img.shields.io/github/stars/rogalmic/vscode-xml-complete.svg?style=social&label=Stars",
+			"href": "https://github.com/rogalmic/vscode-xml-complete/stargazers",
+			"description": "Star the project in github"
+		},
+		{
+			"url": "https://img.shields.io/badge/paypal-donate-blue.svg",
+			"href": "https://paypal.me/rogalmic",
+			"description": "Donate some $ to keep project going"
+		}
+	],
+	"keywords": [
+		"xml",
+		"xaml",
+		"avalonia",
+		"wpf",
+		"xsd",
+		"completion",
+		"linter",
+		"lint",
+		"format",
+		"msbuild"
+	],
+	"activationEvents": [
+		"onLanguage:xml"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"languages": [
+			{
+				"id": "xml",
+				"configuration": "./src/language-configuration.json"
+			}
+		],
+		"configuration": {
+			"title": "XmlComplete",
+			"type": "object",
+			"properties": {
+				"xmlComplete.formattingStyle": {
+					"description": "Defines if attributes should be single line or not.",
+					"type": "string",
+					"enum": [
+						"singleLineAttributes",
+						"multiLineAttributes",
+						"fileSizeOptimized"
+					],
+					"scope": "resource",
+					"default": []
+				},
+				"xmlComplete.schemaMapping": {
+					"description": "Maps xmlns to xsd location Uri.",
+					"type": "array",
+					"scope": "resource",
+					"default": [
+						{
+							"xmlns": "http://www.w3.org/2001/XMLSchema",
+							"xsdUri": "https://www.w3.org/2001/XMLSchema.xsd",
+							"strict": true
+						},
+						{
+							"xmlns": "https://github.com/avaloniaui",
+							"xsdUri": "https://raw.githubusercontent.com/rogalmic/vscode-xml-complete/master/test/Avalonia/AvaloniaXamlSchema.xsd",
+							"strict": false
+						},
+						{
+							"xmlns": "http://schemas.microsoft.com/winfx/2006/xaml/presentation",
+							"xsdUri": "https://raw.githubusercontent.com/rogalmic/vscode-xml-complete/master/test/Wpf/Wpf.xsd",
+							"strict": false
+						},
+						{
+							"xmlns": "http://www.w3.org/2000/svg",
+							"xsdUri": "https://raw.githubusercontent.com/dumistoklus/svg-xsd-schema/master/svg.xsd https://raw.githubusercontent.com/dumistoklus/svg-xsd-schema/master/xlink.xsd https://raw.githubusercontent.com/dumistoklus/svg-xsd-schema/master/namespace.xsd",
+							"strict": true
+						},
+						{
+							"xmlns": "http://schemas.microsoft.com/developer/msbuild/2003",
+							"xsdUri": "https://raw.githubusercontent.com/Microsoft/msbuild/master/src/MSBuild/MSBuild/Microsoft.Build.CommonTypes.xsd https://raw.githubusercontent.com/Microsoft/msbuild/master/src/MSBuild/MSBuild/Microsoft.Build.Core.xsd",
+							"strict": true
+						}
+					]
+				}
+			}
+		}
+	},
+	"scripts": {
+		"prepublish": "tsc -p ./src",
+		"compile": "tsc -p ./src",
+		"tslint": "tslint ./src/**/*.ts",
+		"watch": "tsc -w -p ./src",
+		"test": "mocha -u tdd ./out/tests/; node_modules/.bin/mocha --require jsdoctest out/extension.js",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"package": "vsce package",
+		"publish": "vsce publish",
+		"release": "standard-version"
+	},
+	"dependencies": {
+		"get-uri": "3.0.2",
+		"sax": "1.2.4"
+	},
+	"devDependencies": {
+		"typescript": "^3.9.5",
+		"vscode": "^1.1.36",
+		"tslint": "^6.1.2",
+		"@types/node": "12.12.14",
+		"@types/mocha": "7.0.1",
+		"jsdoctest": "1.7.1",
+		"standard-version": "8.0.0",
+		"vsce": "1.77.0"
+	},
+	"__metadata": {
+		"id": "0cf26461-1e73-40e2-a95f-5e04b1c935c7",
+		"publisherId": "60aabfd6-4033-4422-8bfe-e34a659226cb",
+		"publisherDisplayName": "rogalmic"
+	}
+}
